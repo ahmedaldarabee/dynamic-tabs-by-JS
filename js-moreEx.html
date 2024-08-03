@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>js - examples</title>
+    
+    <style>
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .parent {
+            cursor: pointer;
+            margin-top: 20%;
+        }
+
+
+        .switcher {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            padding: 0;
+            margin-bottom: 10px;
+        }
+
+        .switcher li {
+            padding: 10px 15px;
+            font-weight: bold;
+            cursor: pointer;
+            background-color: #eee;
+            min-width: 105px;
+            text-align: center;
+            transition: 0.2s;
+        }
+        .switcher li.active,
+        .switcher li:hover {
+            background-color: red;
+            color: white;
+        }
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            width: 800px;
+            margin: auto;
+        }
+        .gallery img {
+            width: 150px;
+            margin-bottom: 10px;
+            transition: 0.3s;
+            margin-left: 5px;
+            margin-right: 5px;
+        }
+        
+    </style>
+</head>
+<body>
+
+    <div class="parent">
+
+        <div class="main-content">
+
+            <ul class="switcher">
+                <li class="active" data-cat=".all" >all work</li>
+                <li data-cat=".web" >web part</li>
+                <li data-cat=".gfx" >gui part</li>
+                <li data-cat=".mar" >marketing</li>
+            </ul>
+
+        </div>
+    
+        <div class="gallery">
+
+            <img class="all web" src="imgs/img-01.jpg">
+            <img class="all web" src="imgs/img-02.jpg">
+            
+            <img class="all gfx" src="imgs/img-03.jpg">
+            <img class="all gfx" src="imgs/img-04.jpg">
+            <img class="all mar" src="imgs/img-05.jpg">
+            
+            <img class="all web" src="imgs/img-06.jpg">
+            <img class="all web" src="imgs/img-07.jpg">
+            <img class="all mar" src="imgs/img-08.jpg">
+
+            <img class="all mar" src="imgs/img-08.jpg">
+            <img class="all gfx" src="imgs/img-04.jpg">
+
+        </div>
+    </div>
+
+</body>
+
+    <script>
+
+        let switchList = document.querySelectorAll(".switcher li");
+        let allImgs = Array.from(document.images);
+
+        switchList.forEach((li) => {
+            // here you need to write the li not this
+            // then you needed to write : handlingProcess()
+            li.addEventListener("click",handlingProcess);        
+            li.addEventListener("click",removeImgs);        
+        })
+
+        // this code once user click on the li !
+        function handlingProcess(){
+            switchList.forEach((list) => {
+                // this operation will do concurrently !
+                list.classList.remove("active");
+                // this here refer to the main li !
+                this.classList.add("active");
+            })
+        }
+
+        function removeImgs(){
+            allImgs.forEach((listOFImg) => {
+                listOFImg.style.display = "none";
+                // listOFImg : represent the current image-!
+            })
+            
+            // this.dataset.cat : to get all of the attached class related to the clicked li (main as exist in upper function!) ! 
+            document.querySelectorAll(this.dataset.cat).forEach((element) => {
+                element.style.display = "block";
+            })
+        }
+
+    </script>
+</html>
